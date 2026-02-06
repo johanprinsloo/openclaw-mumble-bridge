@@ -36,7 +36,7 @@ Mumble Users ──PTT──► [Mumble Server] ──audio──► [Bridge] �
 - Python 3.11+
 - Mumble server (murmur/mumble-server) running on your LAN
 - OpenClaw Gateway with Chat Completions endpoint enabled
-- OpenAI API key (for Whisper STT and TTS)
+- ElevenLabs API key (for STT and TTS)
 - `ffmpeg` installed (for audio format conversion)
 - `libopus-dev` (for pymumble)
 
