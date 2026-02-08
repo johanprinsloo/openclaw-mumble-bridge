@@ -1,5 +1,5 @@
 mumble:
-  host: "127.0.0.1"
+  host: "192.168.108.212"
   port: 64738
   username: "Kleo"
   password: ""
@@ -8,20 +8,20 @@ mumble:
 
 stt:
   provider: "elevenlabs"
-  elevenlabs_api_key: "${ELEVENLABS_API_KEY}"
+  elevenlabs_api_key: "sk_d32f07264340ae40027cde22db9b4bc9fa290ac2b026fefb"
   language: "en"
   model: "scribe_v1"
 
 openclaw:
   gateway_url: "http://127.0.0.1:18789"
-  gateway_token: "${OPENCLAW_GATEWAY_TOKEN}"
+  gateway_token: "4648cfdbb71a0ecf8f9a304c6b7141f03df055045faa290f"
   agent_id: "main"
   session_user: "mumble-room"
   timeout_seconds: 60
 
 tts:
   provider: "elevenlabs"
-  elevenlabs_api_key: "${ELEVENLABS_API_KEY}"
+  elevenlabs_api_key: "sk_d32f07264340ae40027cde22db9b4bc9fa290ac2b026fefb"
   voice: "Lily"
   elevenlabs_voice_id: "pFZP5JQG7iQjIQuC4Bku"
   speed: 1.0
