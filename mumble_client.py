@@ -9,6 +9,23 @@ from __future__ import annotations
 import logging
 import threading
 import time
+import ssl
+
+# Monkey-patch ssl.wrap_socket for Python 3.12+ compatibility (pymumble fix)
+if not hasattr(ssl, 'wrap_socket'):
+    def wrap_socket(sock, keyfile=None, certfile=None, server_side=False, cert_reqs=ssl.CERT_NONE, ssl_version=ssl.PROTOCOL_TLS, ca_certs=None, do_handshake_on_connect=True, suppress_ragged_eofs=True, ciphers=None):
+        context = ssl.SSLContext(ssl_version)
+        if certfile:
+            context.load_cert_chain(certfile, keyfile)
+        if ca_certs:
+            context.load_verify_locations(ca_certs)
+        if cert_reqs:
+            context.verify_mode = cert_reqs
+        if ciphers:
+            context.set_ciphers(ciphers)
+        return context.wrap_socket(sock, server_side=server_side, do_handshake_on_connect=do_handshake_on_connect, suppress_ragged_eofs=suppress_ragged_eofs)
+    ssl.wrap_socket = wrap_socket
+
 from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Callable
@@ -73,6 +90,16 @@ class MumbleClient:
         except ImportError:
             import pymumble3 as pymumble
 
+        # Monkey-patch SoundOutput._set_bandwidth to fix Opus error
+        def patched_set_bandwidth(self_so):
+            # Force 48kbps which is safe for Opus
+            try:
+                self_so.encoder.bitrate = 48000
+            except Exception as e:
+                logger.warning("Failed to set fixed bitrate: %s", e)
+        
+        pymumble.soundoutput.SoundOutput._set_bandwidth = patched_set_bandwidth
+
         logger.info(
             "Connecting to Mumble at %s:%d as %s",
             self.config.host,
@@ -99,11 +126,12 @@ class MumbleClient:
         self._mumble.is_ready()
 
         # Join channel
-        channel = self._mumble.channels.find_by_name(self.config.channel)
-        if channel:
-            channel.move_in()
-            logger.info("Joined channel: %s", self.config.channel)
-        else:
+        try:
+            channel = self._mumble.channels.find_by_name(self.config.channel)
+            if channel:
+                channel.move_in()
+                logger.info("Joined channel: %s", self.config.channel)
+        except Exception:
             logger.warning("Channel '%s' not found, staying in root", self.config.channel)
 
         self._connected = True

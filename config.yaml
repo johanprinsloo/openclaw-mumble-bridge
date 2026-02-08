@@ -1,16 +1,16 @@
 mumble:
-  host: "192.168.1.100"
+  host: "127.0.0.1"
   port: 64738
-  username: "OpenClaw"
+  username: "Kleo"
   password: ""
-  channel: "General"
+  channel: "Root"
   certfile: null
 
 stt:
-  provider: "openai"
-  openai_api_key: "${OPENAI_API_KEY}"
+  provider: "elevenlabs"
+  elevenlabs_api_key: "${ELEVENLABS_API_KEY}"
   language: "en"
-  model: "whisper-1"
+  model: "scribe_v1"
 
 openclaw:
   gateway_url: "http://127.0.0.1:18789"
@@ -20,12 +20,11 @@ openclaw:
   timeout_seconds: 60
 
 tts:
-  provider: "openai"
-  openai_api_key: "${OPENAI_API_KEY}"
-  voice: "nova"
+  provider: "elevenlabs"
+  elevenlabs_api_key: "${ELEVENLABS_API_KEY}"
+  voice: "Lily"
+  elevenlabs_voice_id: "pFZP5JQG7iQjIQuC4Bku"
   speed: 1.0
-  # elevenlabs_api_key: "${ELEVENLABS_API_KEY}"
-  # elevenlabs_voice_id: "pMsXgVXv3BLzUgSXRplE"
 
 bridge:
   max_concurrent_utterances: 2

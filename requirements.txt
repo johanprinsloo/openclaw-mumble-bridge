@@ -1,4 +1,4 @@
-pymumble3>=1.0
+pymumble>=1.6
 webrtcvad>=2.0.10
 openai>=1.0
 httpx>=0.25
