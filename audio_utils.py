@@ -133,12 +133,34 @@ def audio_to_mumble_pcm(audio_data: bytes, source_format: str, source_sample_rat
         return resample_pcm(pcm, rate, MUMBLE_SAMPLE_RATE)
 
     if source_format in ("mp3", "opus", "ogg", "flac", "aac"):
-        # Use pydub for compressed formats (requires ffmpeg)
-        from pydub import AudioSegment
-
-        seg = AudioSegment.from_file(io.BytesIO(audio_data), format=source_format)
-        seg = seg.set_channels(1).set_sample_width(2).set_frame_rate(MUMBLE_SAMPLE_RATE)
-        return seg.raw_data
+        # Use ffmpeg via subprocess directly for robust resampling
+        import subprocess
+        
+        try:
+            process = subprocess.Popen(
+                [
+                    "/opt/homebrew/bin/ffmpeg",
+                    "-i", "pipe:0",
+                    "-f", "s16le",
+                    "-ac", "1",
+                    "-ar", str(MUMBLE_SAMPLE_RATE),
+                    "pipe:1"
+                ],
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.DEVNULL
+            )
+            out, _ = process.communicate(input=audio_data)
+            if process.returncode != 0:
+                # Fallback to pydub if ffmpeg fails (e.g. not in path)
+                raise RuntimeError("ffmpeg failed")
+            return out
+        except Exception:
+            # Fallback to pydub
+            from pydub import AudioSegment
+            seg = AudioSegment.from_file(io.BytesIO(audio_data), format=source_format)
+            seg = seg.set_channels(1).set_sample_width(2).set_frame_rate(MUMBLE_SAMPLE_RATE)
+            return seg.raw_data
 
     raise ValueError(f"Unsupported source format: {source_format}")
 

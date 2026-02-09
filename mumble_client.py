@@ -92,8 +92,13 @@ class MumbleClient:
 
         # Monkey-patch SoundOutput._set_bandwidth to fix Opus error
         def patched_set_bandwidth(self_so):
-            # Do nothing to avoid 'invalid argument' error on encoder.bitrate setter
-            pass
+            if not getattr(self_so, 'encoder', None):
+                return
+            # Force 32kbps which is safe for Opus voice
+            try:
+                self_so.encoder.bitrate = 32000
+            except Exception as e:
+                logger.warning("Failed to set fixed bitrate: %s", e)
         
         pymumble.soundoutput.SoundOutput._set_bandwidth = patched_set_bandwidth
 
