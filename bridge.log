@@ -1,35 +1,69 @@
-2026-02-09 17:56:07,702 [__main__] INFO: Starting Mumble ↔ OpenClaw voice bridge
+2026-02-09 22:40:50,147 [__main__] INFO: Starting Mumble ↔ OpenClaw voice bridge
 /Users/kleo/Documents/code/openclaw-mumble-bridge/.venv/lib/python3.14/site-packages/google/protobuf/__init__.py:37: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
   __import__('pkg_resources').declare_namespace(__name__)
-2026-02-09 17:56:07,735 [mumble_client] INFO: Using Opus profile: voip
-2026-02-09 17:56:07,735 [mumble_client] INFO: Connecting to Mumble at 192.168.108.212:64738 as Kleo
+2026-02-09 22:40:50,181 [mumble_timing_fix] INFO: Applying pymumble timing and bandwidth patches...
+2026-02-09 22:40:50,182 [mumble_client] INFO: Using Opus profile: audio
+2026-02-09 22:40:50,182 [mumble_client] INFO: Connecting to Mumble at 192.168.108.212:64738 as Kleo
 /Users/kleo/Documents/code/openclaw-mumble-bridge/bridge.py:26: DeprecationWarning: ssl.PROTOCOL_TLS is deprecated
   context = ssl.SSLContext(ssl_version)
-2026-02-09 17:56:07,747 [mumble_client] WARNING: Channel 'Root' not found, staying in root
-2026-02-09 17:56:07,748 [__main__] INFO: Connected to Mumble. Listening for PTT...
-2026-02-09 17:56:07,748 [__main__] INFO: Bridge state: idle → listening
-2026-02-09 17:56:13,737 [__main__] INFO: Bridge state: listening → processing
-2026-02-09 17:56:14,395 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/speech-to-text "HTTP/1.1 200 OK"
-2026-02-09 17:56:14,397 [stt] INFO: STT [FixedSpeaker]: One, two, three, four, five. The quick brown fox jumps over the lazy dog.
-2026-02-09 17:56:14,418 [httpx] INFO: HTTP Request: POST http://127.0.0.1:18789/v1/chat/completions "HTTP/1.1 200 OK"
-2026-02-09 17:56:19,429 [barge_in] INFO: Barge-in by Johan on phone during processing — cancelling
-2026-02-09 17:56:19,429 [__main__] INFO: Bridge state: processing → listening
-2026-02-09 17:56:19,429 [__main__] INFO: Barge-in: Johan on phone interrupted playback
-2026-02-09 17:56:21,396 [__main__] INFO: Bridge state: listening → processing
-2026-02-09 17:56:21,787 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/speech-to-text "HTTP/1.1 200 OK"
-2026-02-09 17:56:21,788 [stt] INFO: STT [Johan on phone]: That sounded great.
-2026-02-09 17:56:21,811 [httpx] INFO: HTTP Request: POST http://127.0.0.1:18789/v1/chat/completions "HTTP/1.1 200 OK"
-2026-02-09 17:56:44,865 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 200 OK"
-2026-02-09 17:56:44,913 [__main__] INFO: Bridge state: processing → speaking
-2026-02-09 17:56:45,933 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 200 OK"
-2026-02-09 17:56:47,665 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 200 OK"
-2026-02-09 17:56:47,732 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 200 OK"
-2026-02-09 17:56:48,713 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 200 OK"
-2026-02-09 17:56:48,755 [__main__] INFO: Bridge state: speaking → idle
-2026-02-09 17:56:48,981 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 200 OK"
-2026-02-09 17:56:50,304 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 200 OK"
-2026-02-09 17:57:19,475 [__main__] INFO: Bridge state: idle → listening
-2026-02-09 17:57:25,579 [__main__] INFO: Bridge state: listening → processing
-2026-02-09 17:57:26,279 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/speech-to-text "HTTP/1.1 200 OK"
-2026-02-09 17:57:26,280 [stt] INFO: STT [Johan on phone]: Yeah, that sounded much better. Um, I think we should commit the project, um, so we don't lose it.
-2026-02-09 17:57:26,303 [httpx] INFO: HTTP Request: POST http://127.0.0.1:18789/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-09 22:40:50,193 [mumble_client] WARNING: Channel 'Root' not found, staying in root
+2026-02-09 22:40:50,193 [__main__] INFO: Connected to Mumble. Listening for PTT...
+2026-02-10 06:47:19,366 [__main__] INFO: Bridge state: idle → listening
+2026-02-10 06:47:21,713 [__main__] INFO: Bridge state: listening → processing
+2026-02-10 06:47:22,232 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/speech-to-text "HTTP/1.1 200 OK"
+2026-02-10 06:47:22,234 [stt] INFO: STT [Johan on phone]: Test, test.
+2026-02-10 06:47:22,259 [httpx] INFO: HTTP Request: POST http://127.0.0.1:18789/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-10 06:47:23,876 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 401 Unauthorized"
+2026-02-10 06:47:23,879 [tts] ERROR: ElevenLabs TTS error: 401 {"detail":{"status":"quota_exceeded","message":"This request exceeds your quota of 10000. You have 1 credits remaining, while 22 credits are required for this request."}}
+2026-02-10 06:47:24,061 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 401 Unauthorized"
+2026-02-10 06:47:24,063 [tts] ERROR: ElevenLabs TTS error: 401 {"detail":{"status":"quota_exceeded","message":"This request exceeds your quota of 10000. You have 1 credits remaining, while 11 credits are required for this request."}}
+2026-02-10 06:48:51,116 [barge_in] INFO: Barge-in by Johan on phone during processing — cancelling
+2026-02-10 06:48:51,116 [__main__] INFO: Bridge state: processing → listening
+2026-02-10 06:48:51,116 [__main__] INFO: Barge-in: Johan on phone interrupted playback
+2026-02-10 06:48:54,259 [__main__] INFO: Bridge state: listening → processing
+2026-02-10 06:48:54,441 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/speech-to-text "HTTP/1.1 401 Unauthorized"
+2026-02-10 06:48:54,444 [stt] ERROR: ElevenLabs STT API error: 401 {"detail":{"status":"quota_exceeded","message":"This request exceeds your quota of 10000. You have 1 credits remaining, while 3 credits are required for this request."}}
+2026-02-10 06:48:54,444 [barge_in] WARNING: Error recovery: processing → IDLE
+2026-02-10 06:48:54,444 [__main__] INFO: Bridge state: processing → idle
+2026-02-10 06:56:48,739 [__main__] INFO: Bridge state: idle → listening
+2026-02-10 06:56:50,267 [__main__] INFO: Bridge state: listening → processing
+2026-02-10 06:56:50,621 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/speech-to-text "HTTP/1.1 200 OK"
+2026-02-10 06:56:50,621 [stt] INFO: STT [Johan on phone]: Testing.
+2026-02-10 06:56:50,629 [httpx] INFO: HTTP Request: POST http://127.0.0.1:18789/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-10 06:56:52,230 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 401 Unauthorized"
+2026-02-10 06:56:52,230 [tts] ERROR: ElevenLabs TTS error: 401 {"detail":{"status":"quota_exceeded","message":"This request exceeds your quota of 10000. You have 0 credits remaining, while 27 credits are required for this request."}}
+2026-02-10 06:56:52,380 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 401 Unauthorized"
+2026-02-10 06:56:52,380 [tts] ERROR: ElevenLabs TTS error: 401 {"detail":{"status":"quota_exceeded","message":"This request exceeds your quota of 10000. You have 0 credits remaining, while 1 credits are required for this request."}}
+2026-02-10 07:00:57,336 [barge_in] INFO: Barge-in by Johan on phone during processing — cancelling
+2026-02-10 07:00:57,338 [__main__] INFO: Bridge state: processing → listening
+2026-02-10 07:00:57,338 [__main__] INFO: Barge-in: Johan on phone interrupted playback
+2026-02-10 07:01:03,192 [__main__] INFO: Bridge state: listening → processing
+2026-02-10 07:01:03,527 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/speech-to-text "HTTP/1.1 401 Unauthorized"
+2026-02-10 07:01:03,529 [stt] ERROR: ElevenLabs STT API error: 401 {"detail":{"status":"quota_exceeded","message":"This request exceeds your quota of 10000. You have 0 credits remaining, while 6 credits are required for this request."}}
+2026-02-10 07:01:03,529 [barge_in] WARNING: Error recovery: processing → IDLE
+2026-02-10 07:01:03,529 [__main__] INFO: Bridge state: processing → idle
+2026-02-10 07:13:50,686 [__main__] INFO: Bridge state: idle → listening
+2026-02-10 07:13:54,065 [__main__] INFO: Bridge state: listening → processing
+2026-02-10 07:13:55,188 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/speech-to-text "HTTP/1.1 200 OK"
+2026-02-10 07:13:55,190 [stt] INFO: STT [Johan on phone]: Hello, Cleo. Testing, testing.
+2026-02-10 07:13:55,212 [httpx] INFO: HTTP Request: POST http://127.0.0.1:18789/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-10 07:13:57,646 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 200 OK"
+2026-02-10 07:13:57,723 [__main__] INFO: Bridge state: processing → speaking
+2026-02-10 07:13:58,921 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 200 OK"
+2026-02-10 07:14:00,116 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 200 OK"
+2026-02-10 07:14:01,032 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 200 OK"
+2026-02-10 07:14:01,127 [__main__] INFO: Bridge state: speaking → idle
+2026-02-10 07:14:06,565 [__main__] INFO: Bridge state: idle → listening
+2026-02-10 07:14:11,370 [__main__] INFO: Bridge state: listening → processing
+2026-02-10 07:14:11,793 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/speech-to-text "HTTP/1.1 200 OK"
+2026-02-10 07:14:11,795 [stt] INFO: STT [Johan on phone]: Outstanding! This works perfectly now. Thank you.
+2026-02-10 07:14:11,815 [httpx] INFO: HTTP Request: POST http://127.0.0.1:18789/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-10 07:14:15,017 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 200 OK"
+2026-02-10 07:14:15,062 [__main__] INFO: Bridge state: processing → speaking
+2026-02-10 07:14:15,960 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 200 OK"
+2026-02-10 07:14:16,055 [__main__] INFO: Bridge state: speaking → idle
+2026-02-10 07:14:19,358 [__main__] INFO: Bridge state: idle → listening
+2026-02-10 07:14:25,159 [__main__] INFO: Bridge state: listening → processing
+2026-02-10 07:14:25,733 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/speech-to-text "HTTP/1.1 200 OK"
+2026-02-10 07:14:25,735 [stt] INFO: STT [Johan on phone]: Okay, let's make sure to push the code that we just wrote to harden the bridge.
+2026-02-10 07:14:25,755 [httpx] INFO: HTTP Request: POST http://127.0.0.1:18789/v1/chat/completions "HTTP/1.1 200 OK"

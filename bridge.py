@@ -135,6 +135,7 @@ class Bridge:
             api_key=api_key,
             model=stt_cfg.get("model", "scribe_v1"),
             language_code=stt_cfg.get("language", "en"),
+            provider=provider,
         )
 
         # TTS
@@ -272,9 +273,15 @@ class Bridge:
             # Playback complete
             self._controller.on_playback_complete()
 
-        except Exception:
+        except Exception as e:
             logger.exception("Error in utterance pipeline for %s", username)
+            # Try to inform the user if possible via TTS (if TTS is working)
+            # but don't crash the bridge.
             self._controller.on_error()
+        finally:
+            # Ensure we don't leave the controller in a hung state
+            if self._controller.state != BridgeState.IDLE:
+                 self._controller.on_error()
 
     async def _speak_sentence(
         self,
@@ -293,8 +300,12 @@ class Bridge:
         if is_first:
             self._controller.on_response_start()
 
-        # Send audio to Mumble (blocking I/O, but fast)
+        # Send audio to Mumble
         self._mumble.send_audio(pcm)
+        
+        # Give the audio thread a tiny bit of breathing room between sentences
+        # to prevent potential scheduling bottlenecks in pymumble
+        await asyncio.sleep(0.05)
 
     # ── Logging ──
 

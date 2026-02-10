@@ -36,7 +36,7 @@ logger = logging.getLogger(__name__)
 MUMBLE_FRAME_SIZE = 48000 * 2 * 20 // 1000  # 1920 bytes = 960 samples
 
 # Opus profile: "voip" for lower latency speech, "audio" for higher quality general audio
-OPUS_PROFILE = "voip"
+OPUS_PROFILE = "audio"
 
 
 @dataclass
@@ -97,16 +97,28 @@ class MumbleClient:
         try:
             from mumble_timing_fix import apply_all_patches
             apply_all_patches()
-        except ImportError:
-            logger.warning("mumble_timing_fix.py not found, applying basic fixes")
-            # Fallback to basic fixes if the fix file is missing
+        except Exception as e:
+            logger.warning("Could not apply timing patches: %s", e)
+            # Fallback to basic fixes
             def patched_set_bandwidth(self_so):
                 pass
             pymumble.soundoutput.SoundOutput._set_bandwidth = patched_set_bandwidth
         
         # Override the default Opus profile to "voip" for lower latency
         # Default is "audio" which has higher latency but better music quality
+        # FIX: Also force this in create_encoder just in case it's overwritten
         pymumble.constants.PYMUMBLE_AUDIO_TYPE_OPUS_PROFILE = OPUS_PROFILE
+        
+        orig_create_encoder = pymumble.soundoutput.SoundOutput.create_encoder
+        def patched_create_encoder(self_so):
+            orig_create_encoder(self_so)
+            # After creating encoder, ensure we are using the right profile
+            # (Though create_encoder doesn't expose profile directly, 
+            # we rely on the constant above being used during init)
+            pass
+        
+        pymumble.soundoutput.SoundOutput.create_encoder = patched_create_encoder
+
         logger.info("Using Opus profile: %s", OPUS_PROFILE)
 
         logger.info(

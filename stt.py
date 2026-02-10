@@ -27,9 +27,10 @@ class STTClient:
     api_key: str
     model: str = "scribe_v1"
     language_code: str | None = None
+    provider: str = "elevenlabs"  # "elevenlabs" or "local_whisper"
 
     async def transcribe(self, pcm_data: bytes, user: str = "unknown") -> str | None:
-        """Transcribe Mumble PCM audio to text using ElevenLabs Scribe.
+        """Transcribe Mumble PCM audio to text.
 
         Args:
             pcm_data: Raw PCM from Mumble (48kHz, 16-bit, mono).
@@ -39,9 +40,14 @@ class STTClient:
             Transcribed text, or None if transcription failed or was empty.
         """
         import httpx
+        from audio_utils import mumble_to_whisper
 
-        # ElevenLabs Scribe also works well with 16kHz WAV, so reuse existing utility
+        # Convert to WAV (16kHz)
         wav_data = mumble_to_whisper(pcm_data)
+        
+        if self.provider == "local_whisper":
+            return await self._transcribe_local(wav_data, user)
+
         logger.debug("Transcribing %d bytes of WAV from %s via ElevenLabs", len(wav_data), user)
 
         try:
@@ -74,3 +80,60 @@ class STTClient:
         except httpx.RequestError as e:
             logger.error("ElevenLabs STT API request failed: %s", e)
             return None
+
+    async def _transcribe_local(self, wav_data: bytes, user: str) -> str | None:
+        """Transcribe using local openai-whisper (requires 'whisper' installed)."""
+        import tempfile
+        import subprocess
+        import os
+        
+        logger.debug("Transcribing %d bytes from %s via Local Whisper", len(wav_data), user)
+        
+        with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as f:
+            f.write(wav_data)
+            tmp_path = f.name
+            
+        try:
+            # Run whisper CLI: whisper audio.wav --model base.en --output_format txt
+            # Assumes 'whisper' is in PATH or venv
+            cmd = [
+                "whisper",
+                tmp_path,
+                "--model", "base.en",  # fast and decent
+                "--output_format", "txt",
+                "--output_dir", os.path.dirname(tmp_path),
+                "--fp16", "False" # CPU fallback if needed
+            ]
+            
+            # Run subprocess in thread to avoid blocking asyncio loop
+            import asyncio
+            proc = await asyncio.create_subprocess_exec(
+                *cmd,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE
+            )
+            
+            stdout, stderr = await proc.communicate()
+            
+            if proc.returncode != 0:
+                logger.error("Local Whisper failed: %s", stderr.decode())
+                return None
+                
+            # Read output file
+            txt_path = tmp_path + ".txt"
+            if os.path.exists(txt_path):
+                with open(txt_path, "r") as f:
+                    text = f.read().strip()
+                os.unlink(txt_path)
+                logger.info("STT (Local) [%s]: %s", user, text)
+                return text
+            else:
+                logger.error("Local Whisper produced no output file")
+                return None
+                
+        except Exception as e:
+            logger.error("Local STT error: %s", e)
+            return None
+        finally:
+            if os.path.exists(tmp_path):
+                os.unlink(tmp_path)

@@ -22,7 +22,6 @@ openclaw:
 tts:
   provider: "elevenlabs"
   elevenlabs_api_key: "sk_d32f07264340ae40027cde22db9b4bc9fa290ac2b026fefb"
-  voice: "Lily"
   elevenlabs_voice_id: "pFZP5JQG7iQjIQuC4Bku"
   speed: 1.0
 
