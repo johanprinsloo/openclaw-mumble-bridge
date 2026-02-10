@@ -1,0 +1,35 @@
+2026-02-09 17:56:07,702 [__main__] INFO: Starting Mumble ↔ OpenClaw voice bridge
+/Users/kleo/Documents/code/openclaw-mumble-bridge/.venv/lib/python3.14/site-packages/google/protobuf/__init__.py:37: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  __import__('pkg_resources').declare_namespace(__name__)
+2026-02-09 17:56:07,735 [mumble_client] INFO: Using Opus profile: voip
+2026-02-09 17:56:07,735 [mumble_client] INFO: Connecting to Mumble at 192.168.108.212:64738 as Kleo
+/Users/kleo/Documents/code/openclaw-mumble-bridge/bridge.py:26: DeprecationWarning: ssl.PROTOCOL_TLS is deprecated
+  context = ssl.SSLContext(ssl_version)
+2026-02-09 17:56:07,747 [mumble_client] WARNING: Channel 'Root' not found, staying in root
+2026-02-09 17:56:07,748 [__main__] INFO: Connected to Mumble. Listening for PTT...
+2026-02-09 17:56:07,748 [__main__] INFO: Bridge state: idle → listening
+2026-02-09 17:56:13,737 [__main__] INFO: Bridge state: listening → processing
+2026-02-09 17:56:14,395 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/speech-to-text "HTTP/1.1 200 OK"
+2026-02-09 17:56:14,397 [stt] INFO: STT [FixedSpeaker]: One, two, three, four, five. The quick brown fox jumps over the lazy dog.
+2026-02-09 17:56:14,418 [httpx] INFO: HTTP Request: POST http://127.0.0.1:18789/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-09 17:56:19,429 [barge_in] INFO: Barge-in by Johan on phone during processing — cancelling
+2026-02-09 17:56:19,429 [__main__] INFO: Bridge state: processing → listening
+2026-02-09 17:56:19,429 [__main__] INFO: Barge-in: Johan on phone interrupted playback
+2026-02-09 17:56:21,396 [__main__] INFO: Bridge state: listening → processing
+2026-02-09 17:56:21,787 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/speech-to-text "HTTP/1.1 200 OK"
+2026-02-09 17:56:21,788 [stt] INFO: STT [Johan on phone]: That sounded great.
+2026-02-09 17:56:21,811 [httpx] INFO: HTTP Request: POST http://127.0.0.1:18789/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-09 17:56:44,865 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 200 OK"
+2026-02-09 17:56:44,913 [__main__] INFO: Bridge state: processing → speaking
+2026-02-09 17:56:45,933 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 200 OK"
+2026-02-09 17:56:47,665 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 200 OK"
+2026-02-09 17:56:47,732 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 200 OK"
+2026-02-09 17:56:48,713 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 200 OK"
+2026-02-09 17:56:48,755 [__main__] INFO: Bridge state: speaking → idle
+2026-02-09 17:56:48,981 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 200 OK"
+2026-02-09 17:56:50,304 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/pFZP5JQG7iQjIQuC4Bku "HTTP/1.1 200 OK"
+2026-02-09 17:57:19,475 [__main__] INFO: Bridge state: idle → listening
+2026-02-09 17:57:25,579 [__main__] INFO: Bridge state: listening → processing
+2026-02-09 17:57:26,279 [httpx] INFO: HTTP Request: POST https://api.elevenlabs.io/v1/speech-to-text "HTTP/1.1 200 OK"
+2026-02-09 17:57:26,280 [stt] INFO: STT [Johan on phone]: Yeah, that sounded much better. Um, I think we should commit the project, um, so we don't lose it.
+2026-02-09 17:57:26,303 [httpx] INFO: HTTP Request: POST http://127.0.0.1:18789/v1/chat/completions "HTTP/1.1 200 OK"

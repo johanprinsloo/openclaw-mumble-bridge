@@ -35,6 +35,9 @@ logger = logging.getLogger(__name__)
 # Audio chunk size for Mumble playback (20ms at 48kHz mono 16-bit)
 MUMBLE_FRAME_SIZE = 48000 * 2 * 20 // 1000  # 1920 bytes = 960 samples
 
+# Opus profile: "voip" for lower latency speech, "audio" for higher quality general audio
+OPUS_PROFILE = "voip"
+
 
 @dataclass
 class MumbleConfig:
@@ -90,17 +93,21 @@ class MumbleClient:
         except ImportError:
             import pymumble3 as pymumble
 
-        # Monkey-patch SoundOutput._set_bandwidth to fix Opus error
-        def patched_set_bandwidth(self_so):
-            if not getattr(self_so, 'encoder', None):
-                return
-            # Force 32kbps which is safe for Opus voice
-            try:
-                self_so.encoder.bitrate = 32000
-            except Exception as e:
-                logger.warning("Failed to set fixed bitrate: %s", e)
+        # Apply timing and bandwidth fixes
+        try:
+            from mumble_timing_fix import apply_all_patches
+            apply_all_patches()
+        except ImportError:
+            logger.warning("mumble_timing_fix.py not found, applying basic fixes")
+            # Fallback to basic fixes if the fix file is missing
+            def patched_set_bandwidth(self_so):
+                pass
+            pymumble.soundoutput.SoundOutput._set_bandwidth = patched_set_bandwidth
         
-        pymumble.soundoutput.SoundOutput._set_bandwidth = patched_set_bandwidth
+        # Override the default Opus profile to "voip" for lower latency
+        # Default is "audio" which has higher latency but better music quality
+        pymumble.constants.PYMUMBLE_AUDIO_TYPE_OPUS_PROFILE = OPUS_PROFILE
+        logger.info("Using Opus profile: %s", OPUS_PROFILE)
 
         logger.info(
             "Connecting to Mumble at %s:%d as %s",
